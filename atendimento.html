@@ -1,0 +1,56 @@
+<html>
+<head>
+<head>
+<body>
+<p>
+<h2>
+	 
+	 
+<table>
+<tr>
+<form>
+	<td><input type="submit" value="Novo" name="novo"></td>
+</form>
+<form>
+	<td><input type="submit" value="Aberto" name="Aberto"></td>
+</form>
+<form>
+	<td><input type="submit" value="Fechado" name="Fechado"></td>
+</form>
+<form>
+	<td><input type="submit" value="Minha Fila" name="Minha Fila"></td>
+</form>
+</tr>
+	</table>
+<hr>
+<p></p>
+<table>
+	 
+       <form action="~/atendimento.php" method="post">
+		    <fieldset  style="width:900px; height:300px" >
+	          <Label for="chamado">Chamado: 001			|</label>
+			  <Label for="solicitacao">Solicitante: Fabio			|</label>
+			  <Label for="Data">Data Criação: 19/02/2020			|</label>
+			  <label for="Prioridade">Prioridade: Alta			| </label>
+			  <hr>
+              <Label for="Descricao">Descrição: criar chamado tal x</label>
+			  <hr>
+			  <p>
+			  <Label for="comentario">Comentário</label>
+		      <input name="comentario" type="textarea" placeholder="entrar com o comentário" required>
+			  <input name="fechar" type="submit" value="Fechar">
+              <hr>             
+			 <label for="Transferir">Transferir para: <input type=text list=usuario >
+              <datalist id=usuario >
+              <option> Fabio
+              <option> Marcos
+              </datalist>
+			  </label>
+              <input name="transferir" type="submit" value="Transferir">
+			           
+		 
+		    </fieldset>
+       <form>
+	   </p>
+    <body>
+</html>

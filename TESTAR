@@ -1,0 +1,14 @@
+ <form action='novo.php?acao=novo' method='post'>
+		    <fieldset  style='width:400px; height:200px' >
+	          <Label for='Descricao'>Chamado:".$idc."	</label></br>
+			  <Label for='Descricao'>Solicitante: ".$nome." </label></br>
+			  <Label for='Descricao'>Data: ".date("d/m/Y H:i:s")."</label></br>
+              <Label for='Descricao'>Descrever: </label>
+		      <input name='descricao' type='textarea' placeholder='entrar com a descricao' class='txtField' required></br>
+              <label for='prioridade'>Prioridade: </label>
+              <input name='prioridade' type='text' placeholder='entrar com a prioridade' class='txtField' required>
+              <input name='acao' type='submit' value='Criar'>
+		  
+		    </fieldset>
+       <form>
+	   ";

@@ -1,0 +1,199 @@
+<?php
+
+define('DB_SERVER', 'localhost');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'dbempresax');
+$id=1;
+
+$link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+		//$sql  = "INSERT INTO cliente  VALUES (".$_POST["id"]." ,'".$_POST["nome"]."','".$_POST["email"]."','".$_POST["cidade"]."','".$_POST["uf"]."')";
+		$sql ="INSERT INTO CHAMADO ( idusuario , DESCRICAOCHAMADO, PRIORIDADECHAMADO,STATUSCHAMADO) VALUES (".$id.",'" . $_POST["descricao"] . "','" . $_POST["prioridade"] . "','ABERTO')";
+        mysqli_query($link,$sql);
+	
+	
+	 if(isset ($_POST['inserir'])){  // caso nao seja passado o id via GET cadastra 
+        
+       // inserir($id,$nome,$email,$cidade,$uf); // utiliza a funçao INSERIR da classe crud
+       // header("Location: index.php"); // redireciona para a listagem
+    }
+	
+	 /*
+	
+	if(isset ($_POST['atualizar'])){ // caso  seja passado o id via GET edita 
+        $id=$_POST['id'];
+		$nome = $_POST['nome']; //pega o elemento com o pelo NAME
+        $descricao = $_POST['descricao']; //pega o elemento com o pelo NAME
+        atualizar($id,$nome,$descricao); // utiliza a funçao ATUALIZAR da classe crud
+        header("Location: index.php"); // redireciona para a listagem
+    }
+	
+	if(isset ($_POST['excluir'])){ // caso  seja passado o id via GET edita 
+        $id=$_POST['id'];
+		excluir($id); // utiliza a funçao ATUALIZAR da classe crud
+        header("Location: index.php"); // redireciona para a listagem
+    }
+
+	*/
+	/*
+	//inserir
+	 function inserir($id,$nome,$email,$cidade,$uf)
+    {
+        //$sql  = "INSERT INTO cliente  VALUES (?,?,?,?,?)";
+        $sql  = "INSERT INTO cliente  VALUES (".$_POST["id"]." ,".$_POST["nome"].",".$_POST["email"].",".$_POST["cidade"].",".$_POST["uf"].")";
+        mysqli_query($link,$sql);
+        
+    }
+	/*
+	
+	//atualizar
+	function atualizar($id,$nome, $descricao) // funçao de ediçao, campos com seus respectivos valores e o campo id que define a linha a ser editada como parametros
+    {
+        
+		
+		
+		$sql = "UPDATE  produto SET nome= ?, descricao=? WHERE id=?";
+         
+        if($stmt = mysqli_prepare($link, $sql)){
+            
+            mysqli_stmt_bind_param($stmt, "sssi", $param_nome, $param_descricao, $param_id);
+            
+            
+            $param_name = $name;
+            $param_descricao = $descricao;
+            $param_id = $id;
+            
+            
+            if(mysqli_stmt_execute($stmt)){
+            
+                header("location: index.php");
+                exit();
+            } else{
+                echo "Erro tente novamente.";
+            }
+        }
+         
+    }     
+	
+	
+	
+	//excluir
+	function excluir($id) // funçao de exclusao, campo que define a linha a ser editada como parametro
+    {
+        
+            $this->sql_del = "DELETE FROM produto WHERE id=$id";
+        
+        if(!$this->del = mysql_query($this->sql_del))
+        {
+            die ("<center>Erro na exclusão " . '<br>Linha: ' . __LINE__ . "<br>" .mysql_error() ."<br>
+                <a href='index.html'>Voltar ao Menu</a></center>" );
+        }else{
+            print "<center>Registro Excluído com Sucesso!<br><a href='index.html'>Voltar ao Menu</a></center>";
+        }
+      
+    }     
+ 
+//consulta
+function consulta($id){
+ $consulta = mysql_query("SELECT * FROM produto"); // query que busca todos os dados da tabela PRODUTO
+                    while($campo = mysql_fetch_array($consulta)){ // laço de repetiçao que vai trazer todos os resultados da consulta
+                
+                   // <tr>
+                     //   <td>
+                       //     <?php echo $campo['nome']; // mostrando o campo NOME da tabela 
+                        //</td>
+                        //<td>
+                          //  <?php echo $campo['descricao']; // mostrando o campo DESCRICAO da tabela 
+                       // </td>
+                        //<td>
+                        //    <a href="editar.php?id=<?php echo $campo['id']; //pega o campo ID para a ediçao ">
+                         //       Editar
+                         //   </a>
+                       // </td>
+                      //  <td>
+                      //      <a href="excluir.php?id=<?php echo $campo['id'];  //pega o campo ID para a exclusao >
+                       //         Excluir
+                      //      </a>
+                     //   </td>
+                   // </tr>
+
+
+	}      
+}
+	
+	
+	
+	 
+     */
+
+?>
+
+<HTML>
+<HEAD>
+<TITLE>Chamados</TITLE>
+</HEAD>
+
+<BODY>
+
+<table>
+<tr>
+<form>
+<td><input type="submit" value="Novo" name="novo"></td>
+</form>
+<form>
+<td><input type="submit" value="Aberto" name="Aberto"></td>
+</form>
+<form>
+<td><input type="submit" value="Fechado" name="Fechado"></td>
+</form>
+<form>
+<td><input type="submit" value="Minha Fila" name="Minha Fila"></td>
+</form>
+</tr>
+</table>
+<hr>
+<p></p>
+
+
+<table>
+<form>
+
+<input type="text" name="pesquisa" class="txtfield" required>
+<input type="submit" name="pesquisar" value="Pesquisar">
+</form>
+</table>
+<hr>
+
+<table border="0" cellpadding="10" cellspacing="1" width="500" class="tblListForm">
+<tr class="listheader">
+<th>Chamado</th>
+<th><label>Responsável</label></th>
+<th><label>Data de Criação</label></th>
+<th><label>Descrição</label></th>
+<th><label>Prioridade</label></th>
+<th><label>Status</label></th>
+<th><label>Ação</label></th>
+</tr>
+ 
+<?php
+$sql = "SELECT c.idchamado,u.nomeusuario,c.datainichamado,c.descricaochamado,c.prioridadechamado,c.statuschamado FROM chamado c inner join usuario u on c.idusuario=u.idusuario where statuschamado='fechado'";
+$result = mysqli_query($link,$sql);
+$i=0;
+while($row = mysqli_fetch_array($result)) {
+?>
+<tr>
+<td><?php echo $row[0]; ?></td>
+<td><?php echo $row[1]; ?></td>
+<td><?php echo $row[2]; ?></td>
+<td><?php echo $row[3]; ?></td>
+<td><?php echo $row[4]; ?></td>
+<td><?php echo $row[5]; ?></td>
+<td><a href="atendimento.php?Idchamado=<?php echo $row[0]; ?>" class="link">Abrir</a></td>
+</tr>
+<?php
+$i++;
+}
+?>
+</table>
+</BODY>
+</HTML>
