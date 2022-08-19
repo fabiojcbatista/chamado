@@ -10,11 +10,8 @@ require_once('menu.php');
 
 $id=$_SESSION['id']; 
 $idc=$_GET['idchamado'];
-
-
-
  
- $sql = "SELECT nivelusuario from usuario where idusuario=$id";                                
+$sql = "SELECT nivelusuario from usuario where idusuario=$id";                                
 		$result = mysqli_query($link,$sql)or die("Erro no banco de dados!"); 
  
 		$total = mysqli_num_rows($result); 
@@ -33,8 +30,7 @@ switch (get_post_action('transferir', 'fechar','abrir')) {
 		$comentario=$_POST['comentario'];
 		$responsavel=$_POST['itens'];
 		$nm=$responsavel;
-		//echo "$responsavel";
-		
+				
 		$sql = "SELECT idusuario from usuario where nomeusuario='$responsavel'";                                
 		$result = mysqli_query($link,$sql)or die("Erro no banco de dados!"); 
  
@@ -42,16 +38,12 @@ switch (get_post_action('transferir', 'fechar','abrir')) {
 		$dados = mysqli_fetch_array($result);  
 
         $responsavel=$dados[0];
-		// echo "  $responsavel";
+		
 		$msg = "Transferiu para $nm";
-		//echo "$responsavel";
 		echo "$msg";
 		$sql ="INSERT INTO ATENDIMENTO (IDUSUARIO,IDCHAMADO,ACAOATENDIMENTO,COMENTARIOATENDIMENTO,responsavelatendimento) VALUES ('$id','$idc','$msg','$comentario','$responsavel')";
 		mysqli_query($link,$sql);
- 
- 
-        break;
-
+         break;
     case 'fechar':
  
 	$comentario=$_POST['comentario'];
@@ -64,10 +56,8 @@ switch (get_post_action('transferir', 'fechar','abrir')) {
   
 	$sql =" INSERT INTO ATENDIMENTO (IDUSUARIO,IDCHAMADO,ACAOATENDIMENTO,COMENTARIOATENDIMENTO,responsavelatendimento) VALUES ('$id','$idc','Fechou o chamado','$comentario','$id')";
 	mysqli_query($link,$sql);
-    //fechar
         break;
 	case 'abrir':
-		
 		$sql ="UPDATE chamado
 		SET statuschamado = 'ABERTO',datafimchamado=NULL where
 		idchamado = '$idc'";
@@ -75,19 +65,9 @@ switch (get_post_action('transferir', 'fechar','abrir')) {
 
 		$sql =" INSERT INTO ATENDIMENTO (IDUSUARIO,IDCHAMADO,ACAOATENDIMENTO,COMENTARIOATENDIMENTO) VALUES ('$id','$idc','Reabriu o chamado','System service')";
 		mysqli_query($link,$sql);		
- 
 		break;
     default:
-        //no action sent
 }
-
-
-
-
-
-
-
-//if(isset($_REQUEST['acao']) and ($_REQUEST['acao'] == 'transferir')) {
  function transferir(){
 
  $comentario=$_POST['comentario'];
@@ -95,7 +75,6 @@ switch (get_post_action('transferir', 'fechar','abrir')) {
   echo "$responsavel";
 $sql = "SELECT idusuario from usuario where nomeusuario='$responsavel'";                                
 		$result = mysqli_query($link,$sql)or die("Erro no banco de dados!"); 
- 
 		$total = mysqli_num_rows($result); 
 		$dados = mysqli_fetch_array($result);  
 
@@ -106,11 +85,9 @@ $sql = "SELECT idusuario from usuario where nomeusuario='$responsavel'";
  echo "$msg";
  $sql ="INSERT INTO ATENDIMENTO (IDUSUARIO,IDCHAMADO,ACAOATENDIMENTO,COMENTARIOATENDIMENTO,responsavelatendimento) VALUES ('$id','$idc','$msg','$comentario','$responsavel')";
  mysqli_query($link,$sql);
- 
 }
 
-//if(isset($_REQUEST['acao']) and ($_REQUEST['acao'] == 'fechar')) {
- function fechar(){
+function fechar(){
 
  $comentario=$_POST['comentario'];
  $responsavel=$_POST['itens'];
@@ -122,7 +99,6 @@ $sql = "SELECT idusuario from usuario where nomeusuario='$responsavel'";
   
  $sql =" INSERT INTO ATENDIMENTO (IDUSUARIO,IDCHAMADO,ACAOATENDIMENTO,COMENTARIOATENDIMENTO,responsavelatendimento) VALUES ('$id','$idc','Fechou o chamado','$comentario','$id')";
  mysqli_query($link,$sql);
-  
 }
 
 $sql = "SELECT c.idchamado,u.nomeusuario,c.datainichamado,c.prioridadechamado,c.descricaochamado,c.statuschamado FROM chamado c inner join usuario u on c.idusuario=u.idusuario where c.idchamado=".$idc."";
@@ -138,16 +114,13 @@ while($row = mysqli_fetch_array($result)) {
 			  <Label for="solicitacao">Solicitante: <?php echo $row[1]; ?>			|</label>
 			  <Label for="Data">Data Criação: <?php echo cdata($row[2]); ?>			|</label>
 			  <label for="Prioridade">Prioridade: <?php echo $row[3]; ?>			 </label></br>
-			  
 			  <hr>
 			  
               <Label for="Descricao">Descrição:  <?php echo $row[4]; ?></label></br>
 			  <Label for="Responsável">Status:  <?php echo $row[5]; ?></label></br>
 			  <?php  
-			  if($row[5] == 'Fechado'){
-				  
-				echo '<input name="abrir" type="submit" value="Abrir" class ="btnsubmit">';  
-							  
+			  if($row[5] == 'Fechado'){				  
+				echo '<input name="abrir" type="submit" value="Abrir" class ="btnsubmit">';	  
 			  }
 			  else {
 				  
@@ -155,9 +128,6 @@ while($row = mysqli_fetch_array($result)) {
 			  <hr>
 			  <p>
 			  
-			  
-			  
-			 <!-- <Label for="comentario">Comentário</label>-->
 		      <input name="comentario" type="textarea" placeholder="Entrar com o comentário" class="txtField" required>
 			  <hr>             
 			 <!--<label for="Transferir">Transferir para: </label>-->
@@ -174,10 +144,8 @@ while($row = mysqli_fetch_array($result)) {
 			echo '<input type="submit" name="transferir" value="Transferir">';
 			echo '<input name="fechar" type="submit" value="Fechar">';
 			  }
-			echo '</form>';
-				 
-             ?>
-              		 
+			echo '</form>';			 
+             ?>	 
 		    </fieldset>
        <form>
 	   </table>
@@ -188,15 +156,13 @@ require_once("conexao.php");
 require_once('menu.php');
 atendimento();
 
-
-if(isset ($_POST['pesquisar'])){ // caso  seja passado o id via GET edita 
+if(isset ($_POST['pesquisar'])){
         $sql = "SELECT c.idchamado,u.nomeusuario,c.datainichamado,c.descricaochamado,c.prioridadechamado,c.statuschamado FROM chamado c inner join usuario u on c.idusuario=u.idusuario where c.idchamado=".$_POST['pesquisa']."";
     }else
 			
 $sql="SELECT A.ACAOATENDIMENTO,U.NOMEUSUARIO, C.descricaochamado, A.COMENTARIOATENDIMENTO,a.dataatendimento FROM chamado C INNER JOIN atendimento A ON C.IDCHAMADO=A.IDCHAMADO INNER JOIN usuario U ON A.IDUSUARIO=U.IDUSUARIO where a.idchamado=".$idc."";
 $result = mysqli_query($link,$sql);
 $i=0;
-
 
 while($row = mysqli_fetch_array($result)) {
 if($i%2==0)
@@ -216,9 +182,6 @@ $i++;
 }
 ?>
 </table>
-
-
-
 	   </p>
     <body>
 </html>
